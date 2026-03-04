@@ -11,10 +11,15 @@ import (
 
 func main() {
 	app := &cli.App{
-		Name:      "hexlet-path-size",
-		Usage:     "print size of a file or directory",
-		UsageText: "hexlet-path-size [path] [options]",
+		Name:  "hexlet-path-size",
+		Usage: "print size of a file or directory; supports -r (recursive), -H (human-readable), -a (include hidden)",
 		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:    "recursive",
+				Aliases: []string{"r"},
+				Usage:   "recursive size of directories",
+				Value:   false,
+			},
 			&cli.BoolFlag{
 				Name:    "human",
 				Aliases: []string{"H"},
@@ -29,19 +34,16 @@ func main() {
 			},
 		},
 		Action: func(c *cli.Context) error {
-			fmt.Printf("DEBUG - Args().Slice(): %#v\n", c.Args().Slice())
-			fmt.Printf("DEBUG - Флаг 'human': %v\n", c.Bool("human"))
-			fmt.Printf("DEBUG - Флаг 'all': %v\n", c.Bool("all"))
-
 			if c.NArg() == 0 {
 				return fmt.Errorf("path is required")
 			}
 
 			path := c.Args().Get(0)
+			recursive := c.Bool("recursive")
 			human := c.Bool("human")
 			all := c.Bool("all")
 
-			size, err := code.GetSize(path, all)
+			size, err := code.GetSize(path, recursive, all)
 			if err != nil {
 				return err
 			}

@@ -3,10 +3,11 @@ package code
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
-func GetSize(path string, includeHidden bool) (int64, error) {
+func GetSize(path string, recursive bool, includeHidden bool) (int64, error) {
 	info, err := os.Lstat(path)
 	if err != nil {
 		return 0, err
@@ -16,7 +17,12 @@ func GetSize(path string, includeHidden bool) (int64, error) {
 		return info.Size(), nil
 	}
 
+	return getDirSize(path, recursive, includeHidden)
+}
+
+func getDirSize(path string, recursive bool, includeHidden bool) (int64, error) {
 	var totalSize int64
+
 	entries, err := os.ReadDir(path)
 	if err != nil {
 		return 0, err
@@ -27,13 +33,19 @@ func GetSize(path string, includeHidden bool) (int64, error) {
 			continue
 		}
 
-		entryInfo, err := entry.Info()
+		fullPath := filepath.Join(path, entry.Name())
+		info, err := os.Lstat(fullPath)
 		if err != nil {
 			continue
 		}
 
-		if !entryInfo.IsDir() {
-			totalSize += entryInfo.Size()
+		if !info.IsDir() {
+			totalSize += info.Size()
+		} else if recursive {
+			subSize, err := getDirSize(fullPath, recursive, includeHidden)
+			if err == nil {
+				totalSize += subSize
+			}
 		}
 	}
 
