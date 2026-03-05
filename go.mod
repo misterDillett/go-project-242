@@ -3,7 +3,7 @@ module github.com/misterDillett/go-project-242
 go 1.22
 
 require (
-	github.com/stretchr/testify v1.11.1
+	github.com/misterDillett/go-project-242/code v0.0.0
 	github.com/urfave/cli/v2 v2.27.5
 )
 
@@ -13,7 +13,6 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-	replace github.com/misterDillett/go-project-242/code => ./code
+replace github.com/misterDillett/go-project-242/code => ./code
