@@ -1,4 +1,4 @@
-package code
+package size
 
 import (
 	"fmt"
@@ -79,8 +79,6 @@ func FormatSize(size int64, human bool) string {
 		return fmt.Sprintf("%.1fTB", float64(size)/float64(div))
 	case 4:
 		return fmt.Sprintf("%.1fPB", float64(size)/float64(div))
-	case 5:
-		return fmt.Sprintf("%.1fEB", float64(size)/float64(div))
 	default:
 		return fmt.Sprintf("%.1fEB", float64(size)/float64(div))
 	}

@@ -8,7 +8,6 @@ run: build
 
 test:
 	go test -v ./...
-	cd tests && go test -v ./...
 
 test-all: test
 

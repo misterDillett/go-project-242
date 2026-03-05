@@ -1,62 +1,58 @@
-// Package main provides the command-line interface for the path size utility.
+// cmd/hexlet-path-size/main.go
 package main
 
 import (
-	"fmt"
-	"log"
-	"os"
+    "fmt"
+    "log"
+    "os"
 
-	"github.com/urfave/cli/v2"
-
-	"github.com/misterDillett/go-project-242/code"
+    "github.com/urfave/cli/v2"
+    "github.com/misterDillett/go-project-242/internal/size"
 )
 
 func main() {
-	app := &cli.App{
-		Name:  "hexlet-path-size",
-		Usage: "print size of a file or directory; supports -r (recursive), -H (human-readable), -a (include hidden)",
-		Flags: []cli.Flag{
-			&cli.BoolFlag{
-				Name:    "recursive",
-				Aliases: []string{"r"},
-				Usage:   "recursive size of directories",
-				Value:   false,
-			},
-			&cli.BoolFlag{
-				Name:    "human",
-				Aliases: []string{"H"},
-				Usage:   "human-readable sizes (auto-select unit)",
-				Value:   false,
-			},
-			&cli.BoolFlag{
-				Name:    "all",
-				Aliases: []string{"a"},
-				Usage:   "include hidden files and directories",
-				Value:   false,
-			},
-		},
-		Action: func(c *cli.Context) error {
-			if c.NArg() == 0 {
-				return fmt.Errorf("path is required")
-			}
+    app := &cli.App{
+        Name:  "hexlet-path-size",
+        Usage: "print size of a file or directory; supports -r (recursive), -H (human-readable), -a (include hidden)",
+        Flags: []cli.Flag{
+            &cli.BoolFlag{
+                Name:    "recursive",
+                Aliases: []string{"r"},
+                Usage:   "recursive size of directories",
+            },
+            &cli.BoolFlag{
+                Name:    "human",
+                Aliases: []string{"H"},
+                Usage:   "human-readable sizes (auto-select unit)",
+            },
+            &cli.BoolFlag{
+                Name:    "all",
+                Aliases: []string{"a"},
+                Usage:   "include hidden files and directories",
+            },
+        },
+        Action: func(c *cli.Context) error {
+            if c.NArg() == 0 {
+                return fmt.Errorf("path is required")
+            }
 
-			path := c.Args().Get(0)
-			recursive := c.Bool("recursive")
-			human := c.Bool("human")
-			all := c.Bool("all")
+            path := c.Args().Get(0)
+            recursive := c.Bool("recursive")
+            human := c.Bool("human")
+            all := c.Bool("all")
 
-			size, err := code.GetSize(path, recursive, all)
-			if err != nil {
-				return err
-			}
+            sz, err := size.GetSize(path, recursive, all)
+            if err != nil {
+                return err
+            }
 
-			formattedSize := code.FormatSize(size, human)
-			fmt.Printf("%s\t%s\n", formattedSize, path)
-			return nil
-		},
-	}
+            formattedSize := size.FormatSize(sz, human)
+            fmt.Printf("%s\t%s\n", formattedSize, path)
+            return nil
+        },
+    }
 
-	if err := app.Run(os.Args); err != nil {
-		log.Fatal(err)
-	}
+    if err := app.Run(os.Args); err != nil {
+        log.Fatal(err)
+    }
 }

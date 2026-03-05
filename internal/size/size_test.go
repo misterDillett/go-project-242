@@ -1,4 +1,4 @@
-package code
+package size
 
 import (
 	"os"
@@ -24,7 +24,6 @@ func TestGetSize_File(t *testing.T) {
 }
 
 func TestGetSize_Directory_NonRecursive(t *testing.T) {
-
 	tmpDir, err := os.MkdirTemp("", "testdir")
 	require.NoError(t, err)
 	defer os.RemoveAll(tmpDir)
