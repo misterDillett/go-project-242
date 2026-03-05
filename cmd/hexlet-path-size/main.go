@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v2"
-	"hexlet-boilerplates/gopackage/code"
+	"github.com/misterDillett/go-project-242/code"
 )
 
 func main() {
