@@ -1,3 +1,4 @@
+// Package code provides functions for calculating and formatting file/directory sizes.
 package code
 
 import (
@@ -82,4 +83,12 @@ func FormatSize(size int64, human bool) string {
 	default:
 		return fmt.Sprintf("%.1fEB", float64(size)/float64(div))
 	}
+}
+
+func GetPathSize(path string, recursive, human, all bool) (string, error) {
+	size, err := GetSize(path, recursive, all)
+	if err != nil {
+		return "", err
+	}
+	return FormatSize(size, human), nil
 }
