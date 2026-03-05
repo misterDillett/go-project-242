@@ -1,10 +1,16 @@
-.PHONY: build run lint lint-fix test fmt clean
+.PHONY: build run lint lint-fix test test-all fmt clean
 
 build:
 	go build -o bin/hexlet-path-size cmd/hexlet-path-size/main.go
 
 run: build
 	./bin/hexlet-path-size
+
+test:
+	go test -v ./...
+
+test-all: test
+	cd tests && go test -v
 
 test-size:
 	@echo "=== Без флагов ==="
@@ -27,9 +33,6 @@ lint:
 
 lint-fix:
 	golangci-lint run --fix ./...
-
-test:
-	go test -v ./...
 
 clean:
 	rm -rf bin/
