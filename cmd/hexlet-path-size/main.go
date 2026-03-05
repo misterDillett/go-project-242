@@ -1,3 +1,4 @@
+// Package main provides the command-line interface for the path size utility.
 package main
 
 import (
@@ -6,6 +7,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli/v2"
+
 	"github.com/misterDillett/go-project-242/code"
 )
 
