@@ -8,9 +8,9 @@ run: build
 
 test:
 	go test -v ./...
+	cd tests && go test -v ./...
 
 test-all: test
-	cd tests && go test -v
 
 test-size:
 	@echo "=== Без флагов ==="
