@@ -7,7 +7,7 @@ import (
     "os"
 
     "github.com/urfave/cli/v2"
-    "github.com/misterDillett/go-project-242/internal/size"
+    "code"
 )
 
 func main() {
@@ -41,12 +41,12 @@ func main() {
             human := c.Bool("human")
             all := c.Bool("all")
 
-            sz, err := size.GetSize(path, recursive, all)
+            sz, err := code.GetSize(path, recursive, all)
             if err != nil {
                 return err
             }
 
-            formattedSize := size.FormatSize(sz, human)
+            formattedSize := code.FormatSize(sz, human)
             fmt.Printf("%s\t%s\n", formattedSize, path)
             return nil
         },

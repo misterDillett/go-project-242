@@ -1,4 +1,4 @@
-module github.com/misterDillett/go-project-242
+module code
 
 go 1.25
 

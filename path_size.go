@@ -1,4 +1,4 @@
-package size
+package code
 
 import (
 	"fmt"
