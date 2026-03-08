@@ -44,7 +44,7 @@ func main() {
 
 			result, err := code.GetPathSize(path, recursive, human, all)
 			if err != nil {
-				return err
+				return fmt.Errorf("error processing %s: %w", path, err)
 			}
 
 			fmt.Printf("%s\t%s\n", result, path)

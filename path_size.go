@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func GetSize(path string, recursive bool, includeHidden bool) (int64, error) {
+func getSize(path string, recursive bool, includeHidden bool) (int64, error) {
 	info, err := os.Lstat(path)
 	if err != nil {
 		return 0, err
@@ -53,7 +53,7 @@ func getDirSize(path string, recursive bool, includeHidden bool) (int64, error) 
 	return totalSize, nil
 }
 
-func FormatSize(size int64, human bool) string {
+func formatSize(size int64, human bool) string {
 	if !human {
 		return fmt.Sprintf("%dB", size)
 	}
@@ -86,9 +86,9 @@ func FormatSize(size int64, human bool) string {
 }
 
 func GetPathSize(path string, recursive, human, all bool) (string, error) {
-	size, err := GetSize(path, recursive, all)
+	size, err := getSize(path, recursive, all)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("failed to get size for %s: %w", path, err)
 	}
-	return FormatSize(size, human), nil
+	return formatSize(size, human), nil
 }
